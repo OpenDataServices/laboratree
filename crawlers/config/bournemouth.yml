@@ -1,0 +1,23 @@
+name: bournemouth
+description: Bournemouth planning applications
+pipeline:
+  init:
+    method: padocs:seed_url
+    params:
+      start: "2018-07-25"
+      end: "2021-07-25"
+      area: "Bournemouth"
+    handle:
+      pass: fetch
+  fetch:
+    method: fetch
+    handle:
+      pass: parse
+  parse:
+    method: padocs.bournemouth:parse
+    handle:
+      pass: store
+  store:
+    method: directory
+    params:
+      path: /data/results
