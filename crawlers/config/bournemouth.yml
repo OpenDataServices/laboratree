@@ -18,6 +18,8 @@ pipeline:
     handle:
       pass: store
   store:
-    method: directory
-    params:
-      path: /data/results
+    method: aleph_emit_document
+    handle:
+      pass: process
+  process:
+    method: padocs:dump
