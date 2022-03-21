@@ -1,6 +1,6 @@
 import logging
-import memorious.operations.parse
 import hashlib
+import memorious.operations.parse
 
 
 log = logging.getLogger(__name__)
@@ -19,9 +19,16 @@ def parse(context, data):
             hidden_inputs['__EVENTTARGET'] = 'ctl00$MainContent$gridDocuments'
             docs = get_document_args(form)
             for doc in docs:
-                hidden_inputs['__EVENTARGUMENT'] = doc
+                hidden_inputs['__EVENTARGUMENT'] = doc['postbackarg']
                 response = context.http.post(data.get('url'), data=hidden_inputs)
-                context.emit(data={'content_hash': response.content_hash})
+
+                document_data = {
+                    'content_hash': response.content_hash,
+                    'url': data.get('url'),
+                    'title': doc.get('title', ''),
+                    'file_name': doc.get('file_name','')
+                }
+                context.emit(data=document_data)
 
 
 def get_document_args(form):
@@ -32,8 +39,14 @@ def get_document_args(form):
     docs = []
     table = form.find(".//table[@id='MainContent_gridDocuments']")
     for tr in table.findall(".//tr"):
-        doc = tr.get('onclick')
-        if doc is not None:
-            doc = doc.split(',')[1].strip(')').strip("'")
+        doc = {}
+        onclick = tr.get('onclick')
+        if onclick is not None:
+            doc['postbackarg'] = onclick.split(',')[1].strip(')').strip("'")
+            doc['title'] = tr.find(".//a").text
+            hids = [hid.value for hid in tr.findall(".//input[@type='hidden']") if 'hidFullFileName' in hid.name]
+            if len(hids) > 0:
+                doc['file_name'] = hids[0] # Assuming there's only one of these
             docs.append(doc)
+
     return docs
