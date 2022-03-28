@@ -1,0 +1,46 @@
+name: gedling
+description: Gedling planning applications (idox)
+pipeline:
+  init:
+    method: padocs:seed_url
+    params:
+      start: "2018-07-25"
+      end: "2021-07-25"
+      area: "Gedling"
+    handle:
+      pass: seed
+  seed:
+    method: padocs.idox:docs_url
+    handle:
+      pass: fetch
+  fetch:
+    method: fetch
+    handle:
+      pass: parse
+  parse:
+    method: parse
+    params:
+      store:
+        mime_group: documents
+      include_paths:
+        - './/table[@id="Documents"]'
+    handle:
+      store: store_doc
+  store_doc:
+    method: aleph_emit_document
+    handle:
+      pass: process
+  process:
+    method: padocs:aleph_process
+    handle:
+      pass: store
+  store:
+    method: db
+    params:
+      table: gedling_documents
+      unique:
+        - aleph_document_url
+# aggregator:
+#   method: padocs:export
+#   params:
+#     table: gedling_documents
