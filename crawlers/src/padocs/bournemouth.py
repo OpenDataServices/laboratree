@@ -1,9 +1,16 @@
 import logging
 import hashlib
-import memorious.operations.parse
+
+
+from memorious.helpers.key import make_id
 
 
 log = logging.getLogger(__name__)
+
+
+def docs_url(context, data):
+    url = '%s&tab=2' % data['url'] # sets to 'Associated Documents' tab
+    context.emit(data={'url': url})
 
 
 def parse(context, data):
@@ -24,6 +31,7 @@ def parse(context, data):
 
                 document_data = {
                     'content_hash': response.content_hash,
+                    'request_id': make_id(data.get('url'), doc.get('file_name', response.content_hash)),
                     'url': data.get('url'),
                     'title': doc.get('title', ''),
                     'file_name': doc.get('file_name','')

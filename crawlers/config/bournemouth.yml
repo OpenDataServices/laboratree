@@ -8,6 +8,10 @@ pipeline:
       end: "2021-07-25"
       area: "Bournemouth"
     handle:
+      pass: seed
+  seed:
+    method: padocs.bournemouth:docs_url
+    handle:
       pass: fetch
   fetch:
     method: fetch
@@ -16,10 +20,18 @@ pipeline:
   parse:
     method: padocs.bournemouth:parse
     handle:
-      pass: store
-  store:
+      pass: store_doc
+  store_doc:
     method: aleph_emit_document
     handle:
       pass: process
   process:
-    method: padocs:dump
+    method: padocs:aleph_process
+    handle:
+      pass: store
+  store:
+    method: db
+    params:
+      table: bournemouth_documents
+      unique:
+        - aleph_document_url
