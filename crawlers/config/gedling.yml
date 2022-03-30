@@ -18,14 +18,13 @@ pipeline:
     handle:
       pass: parse
   parse:
-    method: parse
-    params:
-      store:
-        mime_group: documents
-      include_paths:
-        - './/table[@id="Documents"]'
+    method: padocs.idox:parse
     handle:
-      store: store_doc
+      pass: fetch_doc
+  fetch_doc:
+    method: fetch
+    handle:
+      pass: store_doc
   store_doc:
     method: aleph_emit_document
     handle:
