@@ -18,6 +18,18 @@ Inside the shell, you can:
 * Run a crawler: `memorious run my_crawler`
 * More: `memorious --help`
 
+Run a crawler in the background:
+
+```
+docker-compose run -d --rm shell memorious run my_crawler
+```
+
+Check if it's running:
+
+```
+docker-compose run --rm shell memorious status my_crawler
+```
+
 ## Development
 
 Crawlers are in `config/`. Common helper functions or operations are in `src/padocs/__init__.py` and crawler-specific helper functions or operations are in `src/padocs/{my_crawler}.py`.
