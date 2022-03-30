@@ -13,19 +13,20 @@ def parse(context, data):
         if result.html is not None:
             docstable = result.html.find(".//table[@id='Documents']")
 
-            for row in docstable.findall(".//tr"):
-                tds = row.findall(".//td")
-                if len(tds) > 0:
-                    # 0: checkbox, 1: date published, 2: document type, 3: measure, 4: description, 5: view link
-                    file = tds[5].find(".//a").get('href')
-                    title = tds[4].text
-                    url = urljoin(result.url, file)
-                    doc = {
-                        'url': url,
-                        'source_url': result.url,
-                        'file_name': file,
-                        'title': title,
-                        'request_id': make_id(url)
-                    }
+            if docstable is not None:
+                for row in docstable.findall(".//tr"):
+                    tds = row.findall(".//td")
+                    if len(tds) > 0:
+                        # 0: checkbox, 1: date published, 2: document type, 3: measure, 4: description, 5: view link
+                        file = tds[5].find(".//a").get('href')
+                        title = tds[4].text
+                        url = urljoin(result.url, file)
+                        doc = {
+                            'url': url,
+                            'source_url': result.url,
+                            'file_name': file,
+                            'title': title,
+                            'request_id': make_id(url)
+                        }
 
-                    context.emit(data=doc)
+                        context.emit(data=doc)

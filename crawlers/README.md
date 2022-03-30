@@ -30,6 +30,10 @@ Check if it's running:
 docker-compose run --rm shell memorious status my_crawler
 ```
 
+Logs:
+
+`docker-compose logs -f` or `docker logs shell_container_name`
+
 ## Development
 
 Crawlers are in `config/`. Common helper functions or operations are in `src/padocs/__init__.py` and crawler-specific helper functions or operations are in `src/padocs/{my_crawler}.py`.
