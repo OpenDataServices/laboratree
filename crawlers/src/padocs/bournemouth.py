@@ -33,6 +33,7 @@ def parse(context, data):
                     'content_hash': response.content_hash,
                     'request_id': make_id(data.get('url'), doc.get('file_name', response.content_hash)),
                     'url': data.get('url'),
+                    'source_url': data.get('url'),
                     'title': doc.get('title', ''),
                     'file_name': doc.get('file_name','')
                 }
