@@ -34,4 +34,8 @@ pipeline:
     params:
       table: bournemouth_documents
       unique:
-        - aleph_document_url
+        - aleph_document_id
+aggregator:
+  method: padocs:export
+  params:
+    table: bournemouth_documents
