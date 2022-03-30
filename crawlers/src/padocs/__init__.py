@@ -36,7 +36,12 @@ def aleph_process(context, data):
 
 
 def export(context, params):
-    pass
+    local_db = dataset.connect(os.environ.get('MEMORIOUS_DATASTORE_URI'))
+    from_table = params.get('table')
+    data = local_db[from_table].all()
+
+    remote_db = dataset.connect(os.environ.get('EPDS_DB_URL'))
+    remote_db['pa_documents'].upsert_many(data, ['area_name', 'aleph_document_id'])
 
 
 def dump(context, data):
