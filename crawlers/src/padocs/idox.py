@@ -2,7 +2,7 @@ from urllib.parse import urljoin
 from memorious.helpers.key import make_id
 
 
-EXCLUDE_DOCS = ['plan', 'drawing', 'elevations']
+EXCLUDE_DOCS = ['plan', 'drawing', 'elevations', 'photograph']
 
 
 def docs_url(context, data):
