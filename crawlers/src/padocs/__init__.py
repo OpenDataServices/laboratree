@@ -41,7 +41,7 @@ def export(context, params):
     data = local_db[from_table].all()
 
     remote_db = dataset.connect(os.environ.get('EPDS_DB_URL'))
-    remote_db['pa_documents'].upsert_many(data, ['area_name', 'aleph_document_id'])
+    remote_db['filtered_pa_documents'].upsert_many(data, ['area_name', 'aleph_document_id'])
 
 
 def dump(context, data):
