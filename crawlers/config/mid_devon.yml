@@ -3,11 +3,30 @@ description: Mid Devon planning applications (idox)
 stealthy: True
 pipeline:
   init:
-    method: padocs:seed_url
+    method: seed
     params:
-      start: "2018-07-25"
-      end: "2021-07-25"
-      area: "Mid Devon"
+      urls:
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PMYX2RKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PLU4CJKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PVYSTZKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PEOIF9KS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PQRRVMKS02X00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QUQDIKKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PR4TFOKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QFRM4KKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PWBPYZKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=Q5A1Z9KS04G00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PVWQ8YKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?activeTab=summary&keyVal=QSXYTMKS07T00
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=Q070W3KS0IY00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?activeTab=summary&keyVal=PPZWNPKS07T00
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PEVXR2KS05K00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QKPHNRKS05K00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QKPH1NKS05K00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=Q5ZUZMKS03J00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QEU5VBKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QE9YJSKS04G00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PTATXBKS03J00&activeTab=summary
     handle:
       pass: seed
   seed:
@@ -20,6 +39,9 @@ pipeline:
       pass: parse
   parse:
     method: padocs.idox:parse
+    params:
+      link_index: 5
+      description_index: 4
     handle:
       pass: fetch_doc
   fetch_doc:
