@@ -30,9 +30,6 @@ pipeline:
       pass: parse
   parse:
     method: padocs.idox:parse
-    params:
-      link_index: 5
-      description_index: 4
     handle:
       pass: fetch_doc
   fetch_doc:

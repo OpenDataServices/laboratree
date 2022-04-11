@@ -13,9 +13,6 @@ def docs_url(context, data):
 
 def parse(context, data):
 
-    link_i = context.params.get('link_index', 5)
-    desc_i = context.params.get('description_index', 4)
-
     with context.http.rehash(data) as result:
         if result.html is not None:
             docstable = result.html.find(".//table[@id='Documents']")
@@ -23,26 +20,33 @@ def parse(context, data):
             if docstable is not None:
                 for row in docstable.findall(".//tr"):
                     tds = row.findall(".//td")
-                    if len(tds) >= link_i and len(tds) >= desc_i:
 
-                        file = tds[link_i].find(".//a").get('href')
-                        title = tds[desc_i].text or '(no title)'
+                    if len(tds) > 1:
+                        link_i = len(tds) - 1 # Assume view link is last col
+                        desc_i = len(tds) - 2 # Assume description is second to last col
 
-                        if include_doc(title):
+                        try:
+                            file = tds[link_i].find(".//a").get('href')
+                            title = tds[desc_i].text or '(no title)'
 
-                            url = urljoin(result.url, file)
-                            doc = {
-                                'url': url,
-                                'source_url': result.url,
-                                'file_name': file,
-                                'title': title,
-                                'request_id': make_id(url)
-                            }
+                            if include_doc(title):
 
-                            context.emit(data=doc)
+                                url = urljoin(result.url, file)
+                                doc = {
+                                    'url': url,
+                                    'source_url': result.url,
+                                    'file_name': file,
+                                    'title': title,
+                                    'request_id': make_id(url)
+                                }
 
-                        else:
-                            context.emit_warning("Skipping document: %s [%s]" % (title, result.url))
+                                context.emit(data=doc)
+
+                            else:
+                                context.emit_warning("Skipping document: %s [%s]" % (title, result.url))
+
+                        except Exception as e:
+                            context.emit_warning("Problem with table [%s]\n%s" % (result.url, e))
 
             else:
                 context.emit_warning("No documents table found [%s]" % result.url)
