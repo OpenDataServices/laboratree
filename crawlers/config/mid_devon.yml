@@ -6,27 +6,18 @@ pipeline:
     method: seed
     params:
       urls:
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PMYX2RKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PLU4CJKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PVYSTZKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PEOIF9KS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PQRRVMKS02X00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QUQDIKKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PR4TFOKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QFRM4KKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PWBPYZKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=Q5A1Z9KS04G00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PVWQ8YKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?activeTab=summary&keyVal=QSXYTMKS07T00
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=Q070W3KS0IY00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?activeTab=summary&keyVal=PPZWNPKS07T00
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PEVXR2KS05K00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QKPHNRKS05K00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QKPH1NKS05K00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=Q5ZUZMKS03J00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QEU5VBKS07T00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QE9YJSKS04G00&activeTab=summary
-        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PTATXBKS03J00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PG0P3NKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PIY2CCKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PNL98UKS03J00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PNMPLSKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PSMKFMKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PTR0S9KS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PVZ3P4KS03J00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PWJDTEKS03J01&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=PZ7JXSKS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=Q4GIKOKS05K00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QPUIC6KS07T00&activeTab=summary
+        - https://planning.middevon.gov.uk/online-applications/applicationDetails.do?keyVal=QQIW3VKS04G00&activeTab=summary
     handle:
       pass: seed
   seed:
