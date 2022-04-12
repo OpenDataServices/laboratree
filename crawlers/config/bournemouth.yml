@@ -2,7 +2,7 @@ name: bournemouth
 description: Bournemouth planning applications
 pipeline:
   init:
-    method: padocs:seed_url
+    method: padocs:seed_url_db
     params:
       start: "2018-07-25"
       end: "2021-07-25"

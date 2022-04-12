@@ -2,7 +2,7 @@ import os
 import dataset
 
 
-def seed_url(context, data):
+def seed_url_db(context, data):
     """
     Queries EPDS database.
     Expects context params:
@@ -20,6 +20,10 @@ def seed_url(context, data):
     result = db.query(query)
     for r in result:
         context.emit(data={'url': r['url']})
+
+
+def seed_url_csv(context, data):
+    pass
 
 
 def aleph_process(context, data):
