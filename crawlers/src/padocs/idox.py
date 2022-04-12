@@ -18,16 +18,17 @@ def parse(context, data):
             docstable = result.html.find(".//table[@id='Documents']")
 
             if docstable is not None:
-                for row in docstable.findall(".//tr"):
-                    tds = row.findall(".//td")
+                ths = docstable.findall(".//th")
+                docs_i = get_document_indices(ths)
 
-                    if len(tds) > 1:
-                        link_i = len(tds) - 1 # Assume view link is last col
-                        desc_i = len(tds) - 2 # Assume description is second to last col
+                for row in docstable.findall(".//tr"):
+
+                    tds = row.findall(".//td")
+                    if len(tds) > 0:
 
                         try:
-                            file = tds[link_i].find(".//a").get('href')
-                            title = tds[desc_i].text or '(no title)'
+                            file = tds[docs_i['view']].find(".//a").get('href')
+                            title = get_document_title(tds, docs_i)
 
                             if include_doc(title):
 
@@ -50,6 +51,34 @@ def parse(context, data):
 
             else:
                 context.emit_warning("No documents table found [%s]" % result.url)
+
+
+def get_document_indices(ths):
+
+    headings = ['view', 'description', 'type']
+    indices = {}
+    for i, th in enumerate(ths):
+        for h in headings:
+            try:
+                th_h = th.text_content().strip().lower()
+            except AttributeError:
+                th_h = ''
+            if h in th_h:
+                indices[h] = i
+
+    return indices
+
+
+def get_document_title(tds, docs_i):
+    desc = tds[docs_i['description']].text
+    doctype = tds[docs_i['type']].text
+    if desc is not None and desc != '':
+        return desc.strip()
+    elif doctype is not None and doctype is not '':
+        return doctype.strip()
+    else:
+        return '(no title)'
+
 
 
 def include_doc(title):
