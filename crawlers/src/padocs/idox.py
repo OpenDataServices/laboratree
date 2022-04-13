@@ -2,7 +2,7 @@ from urllib.parse import urljoin
 from memorious.helpers.key import make_id
 
 
-EXCLUDE_DOCS = ['plan', 'drawing', 'elevations', 'photograph']
+EXCLUDE_DOCS = ['plan', 'drawing', 'elevation', 'photograph']
 
 
 def docs_url(context, data):
@@ -50,7 +50,7 @@ def parse(context, data):
                             context.emit_warning("Problem with table [%s]\n%s" % (result.url, e))
 
             else:
-                context.emit_warning("No documents table found [%s]" % result.url)
+                context.log.info("No documents table found [%s]" % result.url)
 
 
 def get_document_indices(ths):
