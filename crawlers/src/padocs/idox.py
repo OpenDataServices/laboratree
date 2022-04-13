@@ -44,13 +44,13 @@ def parse(context, data):
                                 context.emit(data=doc)
 
                             else:
-                                context.emit_warning("Skipping document: %s [%s]" % (title, result.url))
+                                context.log.info("Skipping document: %s [%s]" % (title, result.url))
 
                         except Exception as e:
                             context.emit_warning("Problem with table [%s]\n%s" % (result.url, e))
 
             else:
-                context.log.info("No documents table found [%s]" % result.url)
+                context.emit_warning("No documents table found [%s]" % result.url)
 
 
 def get_document_indices(ths):
