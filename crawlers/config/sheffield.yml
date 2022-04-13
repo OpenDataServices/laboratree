@@ -1,0 +1,52 @@
+name: sheffield
+description: Sheffield planning applications (idox)
+stealthy: True
+pipeline:
+  init:
+    method: padocs:seed_url_csv
+    params:
+      file: york.csv
+    handle:
+      pass: session
+  session:
+    method: session
+    params:
+      url: https://planningapps.sheffield.gov.uk
+    handle:
+      pass: seed
+  seed:
+    method: padocs.idox:docs_url
+    handle:
+      pass: fetch
+  fetch:
+    method: fetch
+    params:
+      delay: 1
+    handle:
+      pass: parse
+  parse:
+    method: padocs.idox:parse
+    handle:
+      pass: fetch_doc
+  fetch_doc:
+    method: fetch
+    handle:
+      pass: store_doc
+  store_doc:
+    method: aleph_emit_document
+    handle:
+      pass: process
+  process:
+    method: padocs:aleph_process
+    handle:
+      pass: store
+  store:
+    method: db
+    params:
+      table: sheffield_documents
+      unique:
+        - aleph_document_id
+aggregator:
+  method: padocs:export
+  params:
+    table: sheffield_documents
