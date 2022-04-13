@@ -3,11 +3,15 @@ description: Gedling planning applications (idox)
 stealthy: True
 pipeline:
   init:
-    method: padocs:seed_url_db
+    method: padocs:seed_url_csv
     params:
-      start: "2018-07-25"
-      end: "2021-07-25"
-      area: "Gedling"
+      file: gedling.csv
+    handle:
+      pass: session
+  session:
+    method: session
+    params:
+      url: https://pawam.gedling.gov.uk
     handle:
       pass: seed
   seed:
@@ -16,6 +20,8 @@ pipeline:
       pass: fetch
   fetch:
     method: fetch
+    params:
+      delay: 1
     handle:
       pass: parse
   parse:
