@@ -7,6 +7,12 @@ pipeline:
     params:
       file: york.csv
     handle:
+      pass: session
+  session:
+    method: session
+    params:
+      url: https://planningaccess.york.gov.uk/
+    handle:
       pass: seed
   seed:
     method: padocs.idox:docs_url
@@ -14,6 +20,8 @@ pipeline:
       pass: fetch
   fetch:
     method: fetch
+    params:
+      delay: 1
     handle:
       pass: parse
   parse:
