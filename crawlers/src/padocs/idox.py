@@ -22,13 +22,17 @@ def parse(context, data):
 def fetch_doc(context, data):
     """ Parse the PA page for the documents, then also fetch them, including cookies and referer header."""
     with context.http.rehash(data) as result:
-        cookie = set_cookie(result.headers.get('Set-Cookie'))
+
+        headers = {'Referer': result.url}
+
+        if result.headers.get('Set-Cookie'):
+            cookie = set_cookie(result.headers.get('Set-Cookie'))
+            headers['Cookie'] = cookie
+        else:
+            context.log.info("No Set-Cookie header for [%s]" % )
+
         doc = parse_for_doc(result)
         if doc is not None:
-            headers = {
-                'Referer': doc['source_url'],
-                'Cookie': cookie
-            }
             doc_result = context.http.get(doc['url'], headers=headers, lazy=True)
 
             if not doc_result.ok:
