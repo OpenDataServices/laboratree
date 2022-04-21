@@ -20,6 +20,8 @@ pipeline:
       pass: fetch
   fetch:
     method: fetch
+    params:
+      delay: 2
     handle:
       pass: parse
   parse:
