@@ -1,0 +1,42 @@
+name: barnet
+description: Barnet planning applications (idox)
+stealthy: True
+pipeline:
+  init:
+    method: padocs:seed_url_db
+    params:
+      start: "2018-07-25"
+      end: "2021-07-25"
+      area: "Barnet"
+    handle:
+      pass: seed
+  seed:
+    method: padocs.idox:docs_url
+    handle:
+      pass: fetch
+  fetch:
+    method: fetch
+    handle:
+      pass: parse
+  parse:
+    method: padocs.idox:fetch_doc
+    handle:
+      pass: store_doc
+  store_doc:
+    method: aleph_emit_document
+    handle:
+      pass: process
+  process:
+    method: padocs:aleph_process
+    handle:
+      pass: store
+  store:
+    method: db
+    params:
+      table: barnet_documents
+      unique:
+        - aleph_document_id
+aggregator:
+  method: padocs:export
+  params:
+    table: barnet_documents
