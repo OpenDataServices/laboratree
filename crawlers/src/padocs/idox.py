@@ -34,7 +34,11 @@ def fetch_doc(context, data):
         doc = parse_for_doc(result)
         if doc.get('ok'):
             data.update(doc)
-            doc_result = context.http.get(doc['url'], headers=headers, lazy=True)
+            try:
+                doc_result = context.http.get(doc['url'], headers=headers, lazy=True)
+            except:
+                context.emit_warning("Fetch fail [%s], probably timed out" % doc['url'])
+                return
 
             if not doc_result.ok:
                 err = (doc_result.url, doc_result.status_code)
