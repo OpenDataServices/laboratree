@@ -88,15 +88,17 @@ def parse_for_doc(result):
 
                         else:
                             doc['info'] = "Skipping document: %s [%s]" % (title, result.url)
-                            return doc
 
                     except Exception as e:
                         doc['warn'] = "Problem with table [%s]\n%s" % (result.url, e)
-                        return doc
 
         else:
             doc['warn'] = "No documents table found [%s]" % result.url
-            return doc
+
+    else:
+        doc['warn'] = "Bad response [%s] % result.url"
+
+    return doc
 
 
 def get_document_indices(ths):
