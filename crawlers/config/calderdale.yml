@@ -1,0 +1,46 @@
+name: calderdale
+description: Calderdale planning applications (idox)
+stealthy: True
+pipeline:
+  init:
+    method: padocs:seed_url_csv
+    params:
+      file: calderdale.csv
+    handle:
+      pass: session
+  session:
+    method: session
+    params:
+      url: https://portal.calderdale.gov.uk/
+    handle:
+      pass: seed
+  seed:
+    method: padocs.idox:docs_url
+    handle:
+      pass: fetch
+  fetch:
+    method: fetch
+    handle:
+      pass: parse
+  parse:
+    method: padocs.idox:fetch_doc
+    handle:
+      pass: store_doc
+  store_doc:
+    method: aleph_emit_document
+    handle:
+      pass: process
+  process:
+    method: padocs:aleph_process
+    handle:
+      pass: store
+  store:
+    method: db
+    params:
+      table: calderdale_documents
+      unique:
+        - aleph_document_id
+aggregator:
+  method: padocs:export
+  params:
+    table: calderdale_documents
