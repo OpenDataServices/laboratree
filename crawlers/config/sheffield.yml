@@ -5,7 +5,7 @@ pipeline:
   init:
     method: padocs:seed_url_csv
     params:
-      file: york.csv
+      file: sheffield.csv
     handle:
       pass: session
   session:
