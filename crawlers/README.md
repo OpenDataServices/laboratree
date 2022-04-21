@@ -40,7 +40,7 @@ Crawlers are in `config/`. Common helper functions or operations are in `src/pad
 
 Crawlers generally operate as follows:
 
-* Get a list of URLs directly from the ODSC EPDS database. Each crawler is configured with `area_name`, `start_date` and `end_date` to constrain the URLs.
+* Get a list of URLs directly from the ODSC EPDS database, or a pre-generated shortlist from a local csv file. Each crawler is configured with `area_name`, `start_date` and `end_date` to constrain the URLs.
 * Fetch each URL, parse the HTML to find documents associated with the planning application.
 * Download each document, extract additional metadata if possible (eg. title, file name).
 * Send each document to the Laboratree aleph instance (for text extraction).
