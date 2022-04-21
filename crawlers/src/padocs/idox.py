@@ -32,7 +32,8 @@ def fetch_doc(context, data):
             context.log.info("No Set-Cookie header for [%s]" %  result.url)
 
         doc = parse_for_doc(result)
-        if doc is not None:
+        if doc.get('ok'):
+            data.update(doc)
             doc_result = context.http.get(doc['url'], headers=headers, lazy=True)
 
             if not doc_result.ok:
@@ -42,9 +43,19 @@ def fetch_doc(context, data):
                     return
             else:
                 context.log.info("Fetched [%s]: %r", doc_result.status_code, doc_result.url)
+                data.update(doc_result.serialize())
+                context.emit(data=data)
+
+        elif doc.get('warn'):
+            context.emit_warning(doc.get('warn'))
+        elif doc.get('info'):
+            context.log.info(doc.get('info'))
 
 
 def parse_for_doc(result):
+
+    doc = {'ok': False}
+
     if result.html is not None:
         docstable = result.html.find(".//table[@id='Documents']")
 
@@ -65,6 +76,7 @@ def parse_for_doc(result):
 
                             url = urljoin(result.url, file)
                             doc = {
+                                'ok': True,
                                 'url': url,
                                 'source_url': result.url,
                                 'file_name': file,
@@ -75,16 +87,16 @@ def parse_for_doc(result):
                             return doc
 
                         else:
-                            context.log.info("Skipping document: %s [%s]" % (title, result.url))
-                            return
+                            doc['info'] = "Skipping document: %s [%s]" % (title, result.url)
+                            return doc
 
                     except Exception as e:
-                        context.emit_warning("Problem with table [%s]\n%s" % (result.url, e))
-                        return
+                        doc['warn'] = "Problem with table [%s]\n%s" % (result.url, e)
+                        return doc
 
         else:
-            context.emit_warning("No documents table found [%s]" % result.url)
-            return
+            doc['warn'] = "No documents table found [%s]" % result.url
+            return doc
 
 
 def get_document_indices(ths):
