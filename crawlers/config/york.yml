@@ -20,16 +20,10 @@ pipeline:
       pass: fetch
   fetch:
     method: fetch
-    params:
-      delay: 1
     handle:
       pass: parse
   parse:
-    method: padocs.idox:parse
-    handle:
-      pass: fetch_doc
-  fetch_doc:
-    method: fetch
+    method: padocs.idox:fetch_doc
     handle:
       pass: store_doc
   store_doc:
