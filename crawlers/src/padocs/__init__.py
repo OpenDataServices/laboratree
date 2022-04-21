@@ -39,6 +39,7 @@ def seed_url_csv(context, data):
             context.emit(data={'url': url[0]})
 
 
+
 def aleph_process(context, data):
 
     out = {
