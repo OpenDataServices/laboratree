@@ -29,7 +29,7 @@ def fetch_doc(context, data):
             cookie = set_cookie(result.headers.get('Set-Cookie'))
             headers['Cookie'] = cookie
         else:
-            context.log.info("No Set-Cookie header for [%s]" % )
+            context.log.info("No Set-Cookie header for [%s]" %  result.url)
 
         doc = parse_for_doc(result)
         if doc is not None:
