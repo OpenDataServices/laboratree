@@ -5,7 +5,7 @@ pipeline:
   init:
     method: padocs:seed_url_csv
     params:
-      file: gedling.csv
+      file: gedling2.csv
     handle:
       pass: session
   session:
